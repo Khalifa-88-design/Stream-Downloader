@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreamDownloader</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+
+<aside class="sidebar">
+  <div class="brand">
+    <span class="brand-icon">▶</span>
+    <span>Stream Downloader</span>
+  </div>
+
+  <nav>
+    <a class="nav-item active" href="#home">⌂ <span>Home</span></a>
+    <a class="nav-item" href="#downloads">↓ <span>Downloads</span></a>
+    <a class="nav-item" href="#supported">◎ <span>Supported</span></a>
+    <a class="nav-item" href="#settings">⚙ <span>Settings</span></a>
+  </nav>
+
+  <div class="sidebar-note">
+    <strong>Downloader</strong>
+    <p>Use only media you are authorized to download.</p>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div>
+    <div class="eyebrow"></div>
+    <h1>Download your videos</h1>
+  </div>
+  <div class="status-pill"><span class="dot"></span> Local server</div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-copy">
+    <div class="hero-badge">MODERN • FAST • LOCAL</div>
+    <h2>One URL.<br><span>One clean workflow.</span></h2>
+    <p>
+      Analyze a supported URL, see the formats that are actually available,
+      then download the media with automatic retries for unstable connections.
+    </p>
+  </div>
+
+  <div class="url-card">
+    <label for="url">Video URL</label>
+    <div class="url-row">
+      <input id="url" type="url"
+             placeholder="https://www.youtube.com/watch?v=..."
+             autocomplete="off">
+      <button id="analyzeBtn" class="primary">Analyze</button>
+    </div>
+    <div class="url-hint">
+      
+    </div>
+  </div>
+</section>
+
+<div id="errorBox" class="error-box hidden">
+  <div>
+    <strong id="errorTitle">Unable to process URL</strong>
+    <p id="errorMessage"></p>
+  </div>
+  <div class="error-actions">
+    <button id="retryBtn" class="secondary hidden">Retry</button>
+    <button id="openUrlBtn" class="secondary hidden">Open in browser</button>
+    <button id="closeError" class="icon-btn">×</button>
+  </div>
+</div>
+
+<section class="content-grid">
+  <div class="preview-card card">
+    <div class="card-title">
+      <span>Preview</span>
+      <span id="siteBadge" class="mini-badge">Waiting</span>
+    </div>
+
+    <div id="preview" class="preview-empty">
+      <div class="play-orb">▶</div>
+      <h3>Nothing analyzed yet</h3>
+      <p>Paste a supported URL above to inspect its media.</p>
+    </div>
+
+    <div id="previewData" class="preview-data hidden">
+      <img id="thumb" alt="Video thumbnail">
+      <div class="video-info">
+        <h3 id="title">—</h3>
+        <p id="uploader">—</p>
+        <div class="meta-row">
+          <span id="duration">—</span>
+          <span id="site">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="download-card card">
+    <div class="card-title">
+      <span>Download</span>
+      <span id="downloadState" class="state">Ready</span>
+    </div>
+
+    <div class="field">
+      <label>Mode</label>
+      <div class="segmented">
+        <button class="segment active" data-mode="video">Video</button>
+        <button class="segment" data-mode="audio">Audio MP3</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="quality">Quality</label>
+      <select id="quality">
+        <option value="best">Best available</option>
+      </select>
+    </div>
+
+    <button id="downloadBtn" class="download-btn" disabled>
+      ↓ Download
+    </button>
+
+    <div class="progress-wrap">
+      <div class="progress-head">
+        <span id="progressLabel">Waiting</span>
+        <span id="percent">0%</span>
+      </div>
+      <div class="progress">
+        <div id="bar"></div>
+      </div>
+      <div class="progress-meta">
+        <span id="speed">—</span>
+        <span id="eta">—</span>
+      </div>
+    </div>
+
+    <a id="fileLink" class="file-link hidden" href="#">
+      ↓ Save / open downloaded file
+    </a>
+  </div>
+</section>
+
+<section class="bottom-grid">
+  <div class="card info-card" id="downloads">
+    <div class="card-title">Connection handling</div>
+    <div class="feature-list">
+      <div><b>01</b><span>90-second socket timeout.</span></div>
+      <div><b>02</b><span>Automatic HTTP and fragment retries.</span></div>
+      <div><b>03</b><span>Single-fragment mode for unstable connections.</span></div>
+    </div>
+  </div>
+
+  <div class="card info-card" id="supported">
+    <div class="card-title">Unsupported sites</div>
+    <p class="muted">
+      Some movie/TV streaming webpages are not extractable.
+      The application now reports this cleanly instead of showing a raw
+      traceback, and provides an option to open the URL in your browser.
+    </p>
+    <button class="secondary" id="openDulo">Open Dulo in browser</button>
+  </div>
+</section>
+
+
+
+<footer>StreamDownloader • Local application • Use responsibly</footer>
+</main>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
